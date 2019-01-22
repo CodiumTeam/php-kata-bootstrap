@@ -13,12 +13,13 @@ coverage:
 # Docker commands
 docker-build:
 	docker build -t php-docker-bootstrap .
-	@docker run -v $(shell pwd):/opt/project php-docker-bootstrap make dependencies
+	@docker run -it -d --name php-docker-bootstrap -v $(shell pwd):/opt/project php-docker-bootstrap
+	@docker exec php-docker-bootstrap make dependencies
 
 docker-tests:
-	@docker run -v $(shell pwd):/opt/project php-docker-bootstrap make tests
+	docker exec php-docker-bootstrap make tests
 docker-coverage:
-	@docker run -v $(shell pwd):/opt/project php-docker-bootstrap make coverage
+	docker exec php-docker-bootstrap make coverage
 
 define HELP
 # Local commands
